@@ -1,11 +1,12 @@
 from flask import render_template, redirect, request, session, flash
 from Flask_App import app
 from Flask_App.models.dojo import Dojo
+from Flask_App.models.ninja import Ninja
 
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return redirect('/dojos')
 
 
 @app.route('/create/dojo', methods=['POST'])
@@ -21,19 +22,22 @@ def create_dojo():
 def dojo():
     query = "SELECT * FROM dojos;"
     dojos = Dojo.get_all(query)
-    return render_template("results.html", all_dojos=dojos)
+    return render_template("index.html", dojos=dojos)
 
 
-# @app.route('/show/<int:user_id>')
-# def detail_page(user_id):
-#     query = "SELECT * FROM users WHERE users.id = %(id)s;"
-#     data = {
-#         'id': user_id
-#     }
+@app.route('/show/<int:dojo_id>')
+def detail_page(dojo_id):
+    dQuery = "SELECT * FROM dojos WHERE dojos.id = %(id)s;"
+    dData = {
+        'id': dojo_id
+    }
 
-#     results = User.get_all(query, data)
+    nQuery = "SELECT * FROM ninjas;"
 
-#     return render_template("details_page.html", user=results[0])
+    dResults = Dojo.get_all(dQuery, dData)
+    nResults = Ninja.get_all(nQuery)
+
+    return render_template("details_page.html", dojo=dResults[0], ninjas=nResults)
 
 
 # @app.route('/edit_page/<int:user_id>')

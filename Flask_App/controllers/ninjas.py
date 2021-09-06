@@ -1,41 +1,50 @@
 from flask import render_template, redirect, request, session, flash
 from Flask_App import app
 from Flask_App.models.ninja import Ninja
+from Flask_App.models.dojo import Dojo
 
 
-# @app.route('/')
-# def index():
-#     return render_template("index.html")
+@app.route('/create/ninja', methods=['POST'])
+def create_ninja():
+    data = {
+        'first_name': request.form['fname'],
+        'last_name': request.form['lname'],
+        'age': request.form['age'],
+        'dojo_id': request.form['dojo']
+    }
+    Ninja.save(data)
+
+    return redirect('/show_ninjas')
 
 
-# @app.route('/create/user', methods=['POST'])
-# def create_user():
-#     data = {
-#         "fname": request.form['fname'],
-#         "lname": request.form['lname'],
-#         "email": request.form['email'],
-#     }
-#     new_user = User.save(data)
-#     return redirect(f'/show/{new_user}')
+@app.route('/add_ninja')
+def add_ninja():
+    dQuery = 'SELECT * FROM dojos;'
+    dojos = Dojo.get_all(dQuery)
+    return render_template("add_ninja.html", dojos=dojos)
 
 
-# @app.route('/users')
-# def user():
-#     query = "SELECT * FROM users;"
-#     users = User.get_all(query)
-#     return render_template("results.html", all_users=users)
+@app.route('/show_ninja/<int:ninja_id>')
+def show_ninja(ninja_id):
+    query = "SELECT * FROM ninjas WHERE ninjas.id = %(id)s;"
+    data = {
+        'id': ninja_id
+    }
+
+    results = Ninja.get_all(query, data)
+
+    return render_template("show_ninja.html", ninja=results[0])
 
 
-# @app.route('/show/<int:user_id>')
-# def detail_page(user_id):
-#     query = "SELECT * FROM users WHERE users.id = %(id)s;"
-#     data = {
-#         'id': user_id
-#     }
+@app.route('/show_ninjas')
+def show_ninjas():
+    nQuery = "SELECT * FROM ninjas;"
+    dQuery = "SELECT * FROM dojos;"
 
-#     results = User.get_all(query, data)
+    ninjas = Ninja.get_all(nQuery)
+    dojos = Dojo.get_all(dQuery)
 
-#     return render_template("details_page.html", user=results[0])
+    return render_template("show_ninjas.html", ninjas=ninjas, dojos=dojos)
 
 
 # @app.route('/edit_page/<int:user_id>')
@@ -63,11 +72,11 @@ from Flask_App.models.ninja import Ninja
 #     return redirect(f"/show/{user_id}")
 
 
-# @app.route('/delete/<int:user_id>')
-# def remove_user(user_id):
-#     query = "DELETE FROM users WHERE id = %(id)s;"
-#     data = {
-#         'id': user_id,
-#     }
-#     User.remove_user(query, data)
-#     return redirect('/users')
+@app.route('/delete/<int:ninja_id>')
+def remove_ninja(ninja_id):
+    query = "DELETE FROM ninjas WHERE id = %(id)s;"
+    data = {
+        'id': ninja_id,
+    }
+    Ninja.remove_ninja(query, data)
+    return redirect('/show_ninjas')

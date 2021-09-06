@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<h1>{{dojo.name}}'s Details:</h1>
+<table class="table table-dark table-striped table-hover">
+    <tr>
+      <td scope="col">ID#</td>
+      <td>{{dojo.id}}</td>
+    </tr>
+    <tr>
+      <td scope="col">Name</td>
+      <td>{{dojo.name}}</td>
+    </tr>
+    <tr>
+      <td scope="col">Established</td>
+      <td>{{dojo.created_at}}</td>
+    </tr>
+    <tr>
+      <td scope="col">Updated</td>
+      <td>{{dojo.updated_at}}</td>
+    </tr>
+    <tr>
+      <th>Ninjas:</th>
+      {% for n in ninjas %}
+        {% if n.dojo_id == dojo.id %}
+          <tr>
+            <td><a href="/show_ninja/{{n.id}}">~ {{n.last_name}}, {{n.first_name}}</a></td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tr>
+</table>
+
+<button class="btn btn-dark"><a href="/edit_page/{{dojo.id}}">Edit</a></button>
+<button class="btn btn-dark"><a href="/delete/{{dojo.id}}">Delete</a></button>
+<button class="btn btn-dark"><a href="/dojos">Back</a></button>
+
+{% endblock %}

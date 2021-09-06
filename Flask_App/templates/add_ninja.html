@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<form action="/create/ninja" method="POST">
+
+  <input class="form-control" type="text" name='fname' placeholder="First Name">
+  <input class="form-control" type="text" name='lname' placeholder="Last Name">
+  <input class="form-control" type="text" name='age' placeholder="Age">
+  <select name="dojo" id="dojo">
+    {% for d in dojos %}
+      <option value="{{d.id}}">{{d.name}}</option>
+    {% endfor %}
+  </select>
+  <input class="btn btn-dark btn-outline-light" type="submit" value="Add Ninja">
+</form>
+
+{% endblock %}

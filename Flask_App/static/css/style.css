@@ -6,6 +6,11 @@
 
 body {
   background-color: #222;
+  color: #fafafa;
+  border: 3px solid #fafafa;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 10px;
 }
 
 a {

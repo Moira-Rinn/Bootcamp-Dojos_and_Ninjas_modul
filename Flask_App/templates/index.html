@@ -5,14 +5,16 @@
 <h2>New Dojo</h2>
 <form action="/create/dojo" method="POST">
   <input class="form-control" type="text" name="dojo_name" placeholder="Dojo Name">
-  <input class="btn btn-dark" type="submit" value="Create Dojo">
+  <input class="btn btn-dark btn-outline-light" type="submit" value="Create Dojo">
 </form>
 
 <h2>All Dojos</h2>
 <ul>
-  {% for d in all_dojos %}
-  <li class="listItem"><a href="#">{{d.dojo_name}}</a></li>
+  {% for d in dojos %}
+  <li class="listItem"><a href="/show/{{d.id}}">{{d.name}}</a></li>
   {% endfor %}
 </ul>
+
+<button class="btn btn-dark btn-outline-light"><a href="/show_ninjas">Show All Ninjas</a></button>
 
 {% endblock %}
