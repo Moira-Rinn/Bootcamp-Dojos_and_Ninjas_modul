@@ -1,21 +1,21 @@
 from Flask_App.config.mysql_connection import connectToMySQL
 
-# class User:
-#     def __init__(self, data):
-#         self.id = data['id']
-#         self.first_name = data['first_name']
-#         self.last_name = data['last_name']
-#         self.email = data['email']
-#         self.created_at = data['created_at']
-#         self.updated_at = data['updated_at']
 
-#     @classmethod
-#     def get_all(cls, query, data=None):
-#         users_from_db = connectToMySQL('users_schema').query_db(query, data)
-#         users = []
-#         for u in users_from_db:
-#             users.append(cls(u))
-#         return users
+class Dojo:
+    def __init__(self, data):
+        self.id = data['id']
+        self.first_name = data['first_name']
+        self.created_at = data['created_at']
+        self.updated_at = data['updated_at']
+
+    @classmethod
+    def get_all(cls, query, data=None):
+        dojos_from_db = connectToMySQL(
+            'Dojos_and_Ninjas').query_db(query, data)
+        dojos = []
+        for d in dojos_from_db:
+            dojos.append(cls(d))
+        return dojos
 
 #     @classmethod
 #     def save(cls, data=None):

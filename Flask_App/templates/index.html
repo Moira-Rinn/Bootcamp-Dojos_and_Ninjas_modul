@@ -1,12 +1,18 @@
 {% extends 'layout.html' %}
 
 {% block body %}
+<h1>Dojos and Ninjas</h1>
+<h2>New Dojo</h2>
+<form action="/create/dojo" method="POST">
+  <input class="form-control" type="text" name="dojo_name" placeholder="Dojo Name">
+  <input class="btn btn-dark" type="submit" value="Create Dojo">
+</form>
 
-<!-- <form action="/create/user" method="POST">
+<h2>All Dojos</h2>
+<ul>
+  {% for d in all_dojos %}
+  <li class="listItem"><a href="#">{{d.dojo_name}}</a></li>
+  {% endfor %}
+</ul>
 
-  <input class="form-control" type="text" name="fname" placeholder="First Name">
-  <input class="form-control" type="text" name="lname" placeholder="Last Name">
-  <input class="form-control" type="email" name="email" placeholder="Email">
-  <input class="btn btn-dark" type="submit" value="Add User">
-</form> -->
 {% endblock %}

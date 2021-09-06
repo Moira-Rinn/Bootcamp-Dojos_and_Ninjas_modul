@@ -8,22 +8,20 @@ def index():
     return render_template("index.html")
 
 
-# @app.route('/create/user', methods=['POST'])
-# def create_user():
-#     data = {
-#         "fname": request.form['fname'],
-#         "lname": request.form['lname'],
-#         "email": request.form['email'],
-#     }
-#     new_user = User.save(data)
-#     return redirect(f'/show/{new_user}')
+@app.route('/create/dojo', methods=['POST'])
+def create_dojo():
+    data = {
+        "name": request.form['dojo_name']
+    }
+    Dojo.save(data)
+    return redirect('/dojos')
 
 
-# @app.route('/users')
-# def user():
-#     query = "SELECT * FROM users;"
-#     users = User.get_all(query)
-#     return render_template("results.html", all_users=users)
+@app.route('/dojos')
+def dojo():
+    query = "SELECT * FROM dojos;"
+    dojos = Dojo.get_all(query)
+    return render_template("results.html", all_dojos=dojos)
 
 
 # @app.route('/show/<int:user_id>')

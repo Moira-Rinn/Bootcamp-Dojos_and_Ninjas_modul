@@ -3,9 +3,9 @@ from Flask_App import app
 from Flask_App.models.ninja import Ninja
 
 
-@app.route('/')
-def index():
-    return render_template("index.html")
+# @app.route('/')
+# def index():
+#     return render_template("index.html")
 
 
 # @app.route('/create/user', methods=['POST'])
